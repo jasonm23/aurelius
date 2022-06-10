@@ -45,6 +45,16 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('markdown-preview').innerHTML = event.data;
         syntaxHighlight();
         renderMath();
+
+        // detect SOMA Semaphore comment <!-- SOMA: {"scrollTo": 0.42} -->
+        var [_, json] = event.data.match(/<!-- SOMA: (\{.*?\}) -->/)
+        var {scrollTo} = JSON.parse(json);
+
+        if (!isNaN(scrollTo)) {
+            var height = document.body.scrollHeight;
+            console.log(`scrollTo(0, ${scrollTo * height})`);
+            window.scrollTo(0, scrollTo * height);
+        }
     }
 
     socket.onclose = function(event) {

@@ -46,9 +46,11 @@ document.addEventListener('DOMContentLoaded', function() {
         syntaxHighlight();
         renderMath();
 
-        // detect SOMA Semaphore comment <!-- SOMA: {"scrollTo": 0.42} -->
+        // detect SOMA comment <!-- SOMA: {"scrollTo": 0.42} -->
+        // extensible via JSON
         var [_, json] = event.data.match(/<!-- SOMA: (\{.*?\}) -->/)
-        var {scrollTo} = JSON.parse(json);
+        var parsed = JSON.parse(json);
+        var {scrollTo} = parsed;
 
         if (!isNaN(scrollTo)) {
             var height = document.body.scrollHeight;

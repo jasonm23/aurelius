@@ -46,16 +46,24 @@ document.addEventListener('DOMContentLoaded', function() {
         syntaxHighlight();
         renderMath();
 
-        // detect SOMA comment <!-- SOMA: {"scrollTo": 0.42} -->
+        // detect SOMA comment e.g. <!-- SOMA: {"scrollTo": 0.42} -->
         // extensible via JSON
-        var [_, json] = event.data.match(/<!-- SOMA: (\{.*?\}) -->/)
-        var parsed = JSON.parse(json);
-        var {scrollTo} = parsed;
+        var json = event?.data?.match(/<!-- SOMA: (\{.*?\}) -->/)?.[1]
 
-        if (!isNaN(scrollTo)) {
-            var height = document.body.scrollHeight;
-            console.log(`scrollTo(0, ${scrollTo * height})`);
-            window.scrollTo(0, scrollTo * height);
+        if (json) {
+            var parsed = JSON.parse(json);
+
+            // throw away everything except scrollTo.
+            var {scrollTo} = parsed;
+
+            // if it's there and it's a number.
+            if (!isNaN(scrollTo)) {
+                var height = document.body.scrollHeight;
+                console.log(`scrollTo(0, ${scrollTo * height})`);
+
+                // scroll to it as a percentage of body.height.
+                window.scrollTo(0, scrollTo * height);
+            }
         }
     }
 

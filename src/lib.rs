@@ -546,7 +546,6 @@ impl Handler {
             write!(self.conn, "Access-Control-Allow-Methods: *\r\n")?;
             write!(self.conn, "Access-Control-Allow-Origin: *\r\n")?;
             write!(self.conn, "Access-Control-Allow-Headers: *\r\n")?;
-            write!(self.conn, "Access-Control-Allow-Credentials: true\r\n")?;
             write!(self.conn, "Content-Type: text/html; charset=UTF-8\r\n")?;
 
             write!(self.conn, "\r\n")?;

@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     syntaxHighlight();
     renderMath();
+    var debouncedRenderMermaid = aurelius.debounce(renderMermaid, 300);
 
     var previewWindow = document.getElementById('markdown-preview');
     var webSocketUrl = 'ws://' + window.location.host;
@@ -74,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('markdown-preview').innerHTML = event.data;
         syntaxHighlight();
         renderMath();
-        aurelius.debounce(renderMermaid, 500);
+        debouncedRenderMermaid();
 
         // detect SOMA comment e.g. <!-- SOMA: {"scrollTo": 0.42} -->
         // extensible via JSON

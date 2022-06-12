@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function renderMermaid() {
-        var mermaidCodeBlocks = document.querySelectorAll(".mermaid-language");
+        var mermaidCodeBlocks = document.querySelectorAll(".language-mermaid");
         mermaidCodeBlocks.forEach( i => i.classList.add('mermaid') );
         mermaid.initialize();
     }

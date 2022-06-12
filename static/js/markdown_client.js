@@ -1,4 +1,27 @@
+const aurelius = {
+    debounce: function(func, wait, immediate) {
+        var timeout;
+        return function() {
+            var context = this,
+                args = arguments;
+            var later = function() {
+                timeout = null;
+                if ( !immediate ) {
+                    func.apply(context, args);
+                }
+            };
+            var callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait || 200);
+            if ( callNow ) {
+                func.apply(context, args);
+            }
+        };
+    };
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+
     function syntaxHighlight() {
         if (hljs !== undefined) {
             var codeBlocks = document.querySelectorAll('pre code');
@@ -40,7 +63,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     syntaxHighlight();
     renderMath();
-    renderMermaid();
 
     var previewWindow = document.getElementById('markdown-preview');
     var webSocketUrl = 'ws://' + window.location.host;
@@ -52,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('markdown-preview').innerHTML = event.data;
         syntaxHighlight();
         renderMath();
-        renderMermaid();
+        aurelius.debounce(renderMermaid, 500);
 
         // detect SOMA comment e.g. <!-- SOMA: {"scrollTo": 0.42} -->
         // extensible via JSON

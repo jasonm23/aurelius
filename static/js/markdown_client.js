@@ -16,8 +16,8 @@ const aurelius = {
             if ( callNow ) {
                 func.apply(context, args);
             }
-        };
-    };
+        }
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function() {

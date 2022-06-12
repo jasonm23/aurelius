@@ -32,9 +32,16 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
+    function renderMermaid() {
+        var mermaidCodeBlocks = document.querySelectorAll(".mermaid-language");
+        mermaidCodeBlocks.forEach( i => i.classList.add('mermaid') );
+        mermaid.initialize();
+    }
 
     syntaxHighlight();
     renderMath();
+    renderMermaid();
+
     var previewWindow = document.getElementById('markdown-preview');
     var webSocketUrl = 'ws://' + window.location.host;
 
@@ -45,6 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('markdown-preview').innerHTML = event.data;
         syntaxHighlight();
         renderMath();
+        renderMermaid();
 
         // detect SOMA comment e.g. <!-- SOMA: {"scrollTo": 0.42} -->
         // extensible via JSON

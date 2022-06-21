@@ -1,23 +1,7 @@
-const aurelius = {
-    debounce: function(func, wait, immediate) {
-        var timeout;
-        return function() {
-            var context = this,
-                args = arguments;
-            var later = function() {
-                timeout = null;
-                if ( !immediate ) {
-                    func.apply(context, args);
-                }
-            };
-            var callNow = immediate && !timeout;
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait || 200);
-            if ( callNow ) {
-                func.apply(context, args);
-            }
-        }
-    }
+function fixTaskListItems() {
+    Array.from(document.querySelectorAll('li input')).forEach(
+        (e) => e.parentNode.classList.add("task-list-item")
+    )
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -55,15 +39,8 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
-    function renderMermaid() {
-        var mermaidCodeBlocks = document.querySelectorAll(".language-mermaid");
-        mermaidCodeBlocks.forEach( i => i.classList.add('mermaid') );
-        mermaid.initialize();
-    }
-
     syntaxHighlight();
     renderMath();
-    var debouncedRenderMermaid = aurelius.debounce(renderMermaid, 300);
 
     var previewWindow = document.getElementById('markdown-preview');
     var webSocketUrl = 'ws://' + window.location.host;
@@ -73,6 +50,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     socket.onmessage = function(event) {
         document.getElementById('markdown-preview').innerHTML = event.data;
+
+        fixTaskListItems();
+
         syntaxHighlight();
         renderMath();
         debouncedRenderMermaid();

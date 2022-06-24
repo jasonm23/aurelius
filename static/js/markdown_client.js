@@ -52,10 +52,8 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('markdown-preview').innerHTML = event.data;
 
         fixTaskListItems();
-
         syntaxHighlight();
         renderMath();
-        debouncedRenderMermaid();
 
         // detect SOMA comment e.g. <!-- SOMA: {"scrollTo": 0.42} -->
         // extensible via JSON
